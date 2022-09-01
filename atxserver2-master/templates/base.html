@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %}Default title{% end %}</title>
+
+  <link rel="stylesheet" href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.css">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.8/lib/theme-chalk/index.css">
+  <link rel="stylesheet" href="https://unpkg.zhimg.com/bootstrap@4.2.1/dist/css/bootstrap.min.css">
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <script src="https://unpkg.zhimg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.zhimg.com/vue@2.5.21/dist/vue.js"></script>
+  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/moment.js/2.23.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.4.11/index.js"></script>
+  <script src="https://unpkg.zhimg.com/bootstrap@4.2.1/dist/js/bootstrap.min.js"></script>
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/Base64/1.1.0/base64.min.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+
+  {% block head %} {% end %}
+  {% block style %} {% end %}
+</head>
+
+<body>
+<div id="content-wrapper">
+  {% block nav %}
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+
+    <div {% block nav_container_class %}class="container"{% end %}>
+      <a class="navbar-brand" href="/">
+        <span class="title">ATXServer2</span></a>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="navbar-nav">
+          <a v-for="l in links" :href="l.path" class="nav-item nav-link"
+             :class="{active: l.path == activePath}">
+            <i :class="l.icon"></i> {{!l.name}}</a>
+          </a>
+          {% block navlinks %}
+          {% end %}
+          <!-- <a class="nav-item nav-link active" href='/'> -->
+          <!-- </a> -->
+        </div>
+        <div class="navbar-nav navbar-right ml-auto">
+          {% if current_user.admin %}
+          <div class="nav-item">
+            <a class="nav-link" href="/admin"><i class="fas fa-users-cog"></i> 后台管理</a>
+          </div>
+          {% end %}
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ current_user.username }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="/user">用户信息</a>
+              <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    new Vue({
+      el: "#navbarNavDropdown",
+      data: {
+        links: [{
+          path: "/devices",
+          name: "设备列表",
+          icon: ["fas", "fa-th-list"]
+          // icon: ["fab", "fa-android"]
+          // }, {
+          //     path: "/apples",
+          //     name: "苹果设备",
+          //     icon: ["fab", "fa-apple"]
+        }, {
+          path: "/uploads",
+          name: "文件上传",
+          icon: ["fas fa-cloud-upload-alt"]
+        }],
+        activePath: location.pathname,
+      }
+    })
+  </script>
+  {% end %}
+  <div id="app">
+    {% block content %}{% end %}
+  </div>
+</div>
+
+{% block script %}
+<script>
+  var empty = null;
+</script>
+{% end %}
+</body>
+
+</html>

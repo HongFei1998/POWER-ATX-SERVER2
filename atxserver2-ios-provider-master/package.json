@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "usbmux": "^0.1.0"
+  },
+  "name": "atxserver2-ios-provider",
+  "description": "Apple device provider for atxserver2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openatx/atxserver2-ios-provider.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/openatx/atxserver2-ios-provider/issues"
+  },
+  "homepage": "https://github.com/openatx/atxserver2-ios-provider#readme",
+  "devDependencies": {
+    "@types/express": "^4.16.1"
+  }
+}

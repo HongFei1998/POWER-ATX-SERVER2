@@ -1,0 +1,12 @@
+language: python
+python:
+  - "3.6"
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+# command to run tests
+script:
+  - echo "Skip"
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
+  - sh build-docker-push.sh

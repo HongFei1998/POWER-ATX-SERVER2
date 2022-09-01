@@ -1,0 +1,3 @@
+[submodule "ATX-WebDriverAgent"]
+	path = ATX-WebDriverAgent
+	url = https://github.com/openatx/WebDriverAgent

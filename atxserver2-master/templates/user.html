@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}用户详情{% end %}
+
+{% block script %}
+{% end %}
+{% block style %}
+<style>
+  .color-right {
+    background-color: yellowgreen;
+    color: white;
+  }
+
+  .color-wrong {
+    color: red;
+  }
+</style>
+{% end %}
+
+{% block navlinks %}
+<a href="/user" class="nav-item nav-link active">
+  <i class="fas fa-user"></i> 用户信息
+</a>
+{% end %}
+
+{% block content %}
+<div class="container">
+  <div style="margin-top: 10px">
+    <div>
+      <dl>
+        <dt>Email</dt>
+        <dd>{{!email}}</dd>
+        <dt>Username</dt>
+        <dd v-text="username"></dd>
+      </dl>
+    </div>
+    <div class="form-group">
+      <label>Token</label>
+      <input class="form-control form-control-sm" :value="token">
+    </div>
+    <h4>接口使用方法
+      <a target="_blank" href="https://httpie.org/"><small>HTTPie</small></a></h4>
+    <p>
+      <code>http GET http://localhost:4000/api/v1/user Authorization:'Bearer <span v-text="token"></span>'</code>
+    </p>
+  </div>
+  <div>
+    <hr>
+    <h4>组管理 <a href="/user/group_create"><small>创建组</small></a></h4>
+    <el-table :data="groups">
+      <el-table-column prop="id" label="名称"></el-table-column>
+      <el-table-column prop="name" label="备注"></el-table-column>
+      <el-table-column prop="admin" label="管理员">
+        <template slot-scope="scope">
+          <span v-text="scope.row.admin ? 'true' : 'false'"></span>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</div>
+{% end %}
+
+{% block script %}
+<script>
+  $.getJSON("/api/v1/user")
+    .then((ret) => {
+      console.log(ret)
+      new Vue({
+        el: "#app",
+        data: Object.assign({
+          token: "",
+        }, ret),
+      })
+    })
+</script>
+{% end %}
